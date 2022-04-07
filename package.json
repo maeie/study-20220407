@@ -1,0 +1,64 @@
+{
+  "name": "ibm-nodejs-cloudant-app",
+  "version": "1.0.0",
+  "description": "node.js + express + cloudant",
+  "private": true,
+  "engines": {
+    "node": "^16.0.0"
+  },
+  "config": {
+    "entrypoint": "server/server.js"
+  },
+  "scripts": {
+    "dev": "nodemon server/server.js",
+    "debug": "node --nolazy --inspect-brk=5858 server.js",
+    "start": "node server/server.js",
+    "check-coverage": "c8 report --check-coverage --lines 100",
+    "lint": "eslint --ignore-path .gitignore .",
+    "fix": "eslint --ignore-path .gitignore . --fix",
+    "test": "c8 mocha --loader=testdouble test --recursive --exit"
+  },
+  "type": "module",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test && npm run check-coverage"
+    }
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "exclude": [
+      "test"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "dependencies": {
+    "@ibm-cloud/cloudant": "^0.1.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "helmet": "^5.0.2",
+    "ibm-cloud-env": "^0.3.2"
+  },
+  "devDependencies": {
+    "c8": "^7.11.0",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^8.12.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "husky": "^7.0.4",
+    "mocha": "^9.2.2",
+    "nodemon": "^2.0.15",
+    "sinon": "^13.0.1",
+    "sinon-chai": "^3.7.0",
+    "supertest": "^6.2.2",
+    "testdouble": "^3.16.4"
+  }
+}
